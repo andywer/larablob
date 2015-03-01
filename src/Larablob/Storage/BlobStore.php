@@ -19,11 +19,16 @@ class BlobStore {
 
     /**
      * @param string $path
+     * @param bool $autoCreate
      * @throws FileSystemException
      */
-    public function __construct($path)
+    public function __construct($path, $autoCreate = false)
     {
-        if (!File::isDirectory($path)) { throw new FileSystemException('Not a directory: '.$path); }
+        if (!File::isDirectory($path)) {
+            if (!$autoCreate) { throw new FileSystemException('Not a directory: '.$path); }
+            
+            File::makeDirectory($path);
+        }
         
         $this->path = $path;
     }
@@ -38,8 +43,8 @@ class BlobStore {
         if ($this->blobGroupExists($name)) { throw new AlreadyPresentException('Blob group exists: '.$name); }
         
         $blobGroupPath = $this->getBlobGroupPath($name);
-        
         File::makeDirectory($blobGroupPath);
+
         return new BlobGroup($this, $name, $blobGroupPath);
     }
 
@@ -63,7 +68,7 @@ class BlobStore {
     /**
      * @return string[]
      */
-    public function allBlobGroups()
+    public function allBlobGroupNames()
     {
         $directoryNames = File::directories($this->path);
         $blobGroupNames = array();
@@ -75,6 +80,10 @@ class BlobStore {
         return $blobGroupNames;
     }
 
+    /**
+     * @param string $name
+     * @return bool
+     */
     public function blobGroupExists($name)
     {
         return File::exists($this->getBlobGroupPath($name));

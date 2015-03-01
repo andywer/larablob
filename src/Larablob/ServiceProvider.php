@@ -1,6 +1,7 @@
 <?php namespace Larablob;
 
 use Illuminate\Support\ServiceProvider;
+use Larablob\Storage\BlobStore;
 
 class LarablobServiceProvider extends ServiceProvider {
 
@@ -18,7 +19,10 @@ class LarablobServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		//
+        $this->app->bind('larablob:store', function()
+        {
+            return new BlobStore(storage_path('larablob'), true);
+        });
 	}
 
 	/**
@@ -28,7 +32,7 @@ class LarablobServiceProvider extends ServiceProvider {
 	 */
 	public function provides()
 	{
-		return array();
+		return array('larablob:store');
 	}
 
 }
