@@ -6,36 +6,96 @@
  * Time: 18:08
  */
 
-class Blob {
+use File;
 
+class Blob {
+    
+    /** @var BlobGroup */
+    protected $blobGroup;
+    
+    /** @var string */
+    protected $id;
+    
+    /** @var string */
+    protected $path;
+    
+    /** @var string */
+    protected $metaFilePath;
+
+
+    /**
+     * @param BlobGroup $group
+     * @param string $id
+     * @param string $path
+     */
     public function __construct(BlobGroup $group, $id, $path)
     {
-        // TODO
+        $this->blobGroup = $group;
+        $this->id = $id;
+        $this->path = $path;
+        $this->metaFilePath = $path.' meta.json';
     }
 
+    /**
+     * @return string
+     */
+    public function getId() { return $this->id; }
+
+    /**
+     * @return BlobGroup
+     */
+    public function getBlobGroup() { return $this->blobGroup; }
+
+    /**
+     * @return void
+     */
     public function delete()
     {
-        // TODO
+        File::delete($this->path);
     }
 
+    /**
+     * @return string
+     */
     public function data()
     {
-        // TODO
+        return File::get($this->path);
     }
 
+    /**
+     * @return int
+     */
+    public function size()
+    {
+        return File::size($this->path);
+    }
+
+    /**
+     * @param string $data
+     */
     public function save($data)
     {
-        // TODO
+        File::put($this->path, $data);
     }
 
+    /**
+     * @return mixed
+     */
     public function getMeta()
     {
-        // TODO
+        $unparsed = File::get($this->metaFilePath);
+        
+        return json_decode($unparsed);
     }
 
+    /**
+     * @param mixed $metaData
+     */
     public function setMeta($metaData)
     {
-        // TODO
+        $parsed = json_encode($metaData);
+        
+        File::put($this->metaFilePath, $parsed);
     }
-    
+
 }
