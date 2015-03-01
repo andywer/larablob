@@ -8,6 +8,7 @@
 
 use File;
 use Larablob\Exceptions\AlreadyPresentException;
+use Larablob\Exceptions\NamingException;
 use Larablob\Exceptions\NotFoundException;
 use Rhumsaa\Uuid\Uuid;
 
@@ -56,12 +57,14 @@ class BlobGroup {
     /**
      * @param string [$id]
      * @return Blob
+     * @throws NamingException
      * @throws AlreadyPresentException
      */
     public function createBlob($id = null)
     {
-        if (!$id) { $id = Uuid::uuid4(); }
+        if ($id === null) { $id = Uuid::uuid4()->toString(); }
         
+        if (!is_string($id) || strlen($id) < 1) { throw new NamingException('Illegal blob id: '.$id); }
         if ($this->blobExists($id)) { throw new AlreadyPresentException('Blob exists: '.$id); }
 
         $blobPath = $this->getBlobPath($id);
@@ -100,7 +103,9 @@ class BlobGroup {
         $blobIds = array();
 
         foreach ($blobFiles as $blobFileName) {
-            $blobIds[] = $this->unescapeBlobId($blobFileName);
+            if (substr($blobFileName, -10) === ' meta.json') { continue; }
+            
+            $blobIds[] = $this->unescapeBlobId(basename($blobFileName));
         }
 
         return $blobIds;
@@ -112,7 +117,7 @@ class BlobGroup {
      */
     public function blobExists($id)
     {
-        return File::exists($this->escapeBlobId($id));
+        return File::exists($this->getBlobPath($id));
     }
 
 
