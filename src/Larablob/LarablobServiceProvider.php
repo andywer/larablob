@@ -1,4 +1,4 @@
-<?php namespace Andywer\Larablob;
+<?php namespace Larablob;
 
 use Illuminate\Support\ServiceProvider;
 
