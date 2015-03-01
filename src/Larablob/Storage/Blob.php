@@ -76,6 +76,7 @@ class Blob {
     public function save($data)
     {
         File::put($this->path, $data);
+        clearstatcache();                   // File::size() tends to return obsolete values if clearstatcache() is not called
     }
 
     /**

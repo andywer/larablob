@@ -12,7 +12,15 @@
         "illuminate/support": "4.1.*",
         "rhumsaa/uuid": "~2.8"
     },
+    "require-dev": {
+        "orchestra/testbench": "2.1.*",
+        "mockery/mockery": "0.9.*",
+        "phpunit/phpunit": "~4.5"
+    },
     "autoload": {
+        "classmap": [
+            "tests/TestCase.php"
+        ],
         "psr-0": {
             "Larablob": "src/"
         }
