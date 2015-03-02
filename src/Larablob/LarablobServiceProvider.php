@@ -5,12 +5,12 @@ use Larablob\Storage\BlobStore;
 
 class LarablobServiceProvider extends \Illuminate\Support\ServiceProvider {
 
-	/**
-	 * Indicates if loading of the provider is deferred.
-	 *
-	 * @var bool
-	 */
-	protected $defer = false;
+    /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = false;
 
     /**
      * Bootstrap the application events.
@@ -24,12 +24,12 @@ class LarablobServiceProvider extends \Illuminate\Support\ServiceProvider {
         );
     }
     
-	/**
-	 * Register the service provider.
-	 *
-	 * @return void
-	 */
-	public function register()
+    /**
+     * Register the service provider.
+     *
+     * @return void
+     */
+    public function register()
 	{
         $this->app->bind('larablob:store', function()
         {
@@ -37,14 +37,14 @@ class LarablobServiceProvider extends \Illuminate\Support\ServiceProvider {
         });
 	}
 
-	/**
-	 * Get the services provided by the provider.
-	 *
-	 * @return array
-	 */
-	public function provides()
-	{
-		return ['larablob:store'];
-	}
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return string[]
+     */
+    public function provides()
+    {
+        return ['larablob:store'];
+    }
 
 }
