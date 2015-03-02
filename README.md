@@ -6,6 +6,14 @@
 Laravel local blob storage
 
 
+## Features
+
+- File system based blob storage
+- Blobs grouped by named blob groups
+- Supports storing blob metadata (stored as JSON files)
+- Compatible with Laravel 4.1, 4.2 & 5.0
+
+
 ## Installation
 
 Just run the following command in your project directory:
@@ -31,14 +39,6 @@ And optionally:
         'BlobStore' => 'Larablob\Facades\BlobStore'
     ]
 ```
-
-
-## Features
-
-- File system based blob storage
-- Grouped blobs
-- Supports storing blob metadata (stored as JSON files)
-- Compatible with Laravel 4.1, 4.2 & 5.0
 
 
 ## Usage
