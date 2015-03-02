@@ -101,5 +101,14 @@ Currently the only thing to configure is the store path. It defaults to a direct
 storage directory.
 
 
+## Laravel 4
+
+If you still use Laravel 4.1 or 4.2, install the package like:
+
+```bash
+composer require andywer/larablob=dev-laravel4
+```
+
+
 ## License
 This software is licensed under the terms of the MIT license. See LICENSE for details.
