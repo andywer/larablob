@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Facade;
  * Class BlobStore
  * @package Larablob\Facades
  * 
+ * @method static string getPath()
  * @method static \Larablob\Storage\BlobGroup createBlobGroup(string $name)
  * @method static \Larablob\Storage\BlobGroup getBlobGroup(string $name, bool $autoCreate = false)
  * @method static string[] allBlobGroupNames()

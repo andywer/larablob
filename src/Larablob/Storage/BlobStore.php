@@ -9,6 +9,7 @@
 use File;
 use Larablob\Exceptions\AlreadyPresentException;
 use Larablob\Exceptions\FileSystemException;
+use Larablob\Exceptions\NamingException;
 use Larablob\Exceptions\NotFoundException;
 
 class BlobStore {
@@ -34,12 +35,20 @@ class BlobStore {
     }
 
     /**
+     * @return string
+     */
+    public function getPath() { return $this->path; }
+
+    /**
      * @param string $name
      * @return BlobGroup
+     * @throws NamingException
      * @throws AlreadyPresentException
      */
     public function createBlobGroup($name)
     {
+        if (!is_string($name) || strlen($name) < 1) { throw new NamingException('Illegal blob group name: '.$name); }
+        
         if ($this->blobGroupExists($name)) { throw new AlreadyPresentException('Blob group exists: '.$name); }
         
         $blobGroupPath = $this->getBlobGroupPath($name);
@@ -74,7 +83,7 @@ class BlobStore {
         $blobGroupNames = array();
         
         foreach ($directoryNames as $dirName) {
-            $blobGroupNames[] = $this->unescapeBlobGroupName($dirName);
+            $blobGroupNames[] = $this->unescapeBlobGroupName(basename($dirName));
         }
         
         return $blobGroupNames;
