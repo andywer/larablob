@@ -1,5 +1,6 @@
 <?php namespace Larablob;
 
+use Config;
 use Larablob\Storage\BlobStore;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider {
@@ -11,6 +12,16 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 */
 	protected $defer = false;
 
+    /**
+     * Bootstrap the application events.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $this->package('andywer/larablob');
+    }
+    
 	/**
 	 * Register the service provider.
 	 *
@@ -20,7 +31,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	{
         $this->app->bind('larablob:store', function()
         {
-            return new BlobStore(storage_path('larablob'), true);
+            return new BlobStore(Config::get('larablob::store_path'), true);
         });
 	}
 
