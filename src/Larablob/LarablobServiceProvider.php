@@ -3,7 +3,7 @@
 use Config;
 use Larablob\Storage\BlobStore;
 
-class ServiceProvider extends \Illuminate\Support\ServiceProvider {
+class LarablobServiceProvider extends \Illuminate\Support\ServiceProvider {
 
 	/**
 	 * Indicates if loading of the provider is deferred.

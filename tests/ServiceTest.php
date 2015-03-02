@@ -14,7 +14,7 @@ class ServiceTest extends TestCase {
     {
         parent::setUp();
         
-        App::register('\\Larablob\\ServiceProvider');
+        App::register('Larablob\LarablobServiceProvider');
     }
     
     public function testIfStoreInitialized()
@@ -24,7 +24,7 @@ class ServiceTest extends TestCase {
     
     public function testProvides()
     {
-        $provider = new \Larablob\ServiceProvider(BlobStore::getFacadeApplication());
+        $provider = new \Larablob\LarablobServiceProvider(BlobStore::getFacadeApplication());
         
         $this->assertEquals(array('larablob:store'), $provider->provides());
     }
