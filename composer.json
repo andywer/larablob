@@ -1,6 +1,7 @@
 {
     "name": "andywer/larablob",
     "description": "Laravel local blob storage",
+    "keywords": ["laravel", "blob", "store"],
     "authors": [
         {
             "name": "Andy Wermke",
