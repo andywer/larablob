@@ -1,4 +1,4 @@
 <?php
-return array(
+return [
     'store_path' => storage_path('larablob')
-);
+];

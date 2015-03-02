@@ -19,7 +19,9 @@ class LarablobServiceProvider extends \Illuminate\Support\ServiceProvider {
      */
     public function boot()
     {
-        $this->package('andywer/larablob');
+        $this->mergeConfigFrom(
+            __DIR__.'/../../config/larablob.php', 'larablob'
+        );
     }
     
 	/**
@@ -31,7 +33,7 @@ class LarablobServiceProvider extends \Illuminate\Support\ServiceProvider {
 	{
         $this->app->bind('larablob:store', function()
         {
-            return new BlobStore(Config::get('larablob::store_path'), true);
+            return new BlobStore(Config::get('larablob.store_path'), true);
         });
 	}
 
@@ -42,7 +44,7 @@ class LarablobServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 */
 	public function provides()
 	{
-		return array('larablob:store');
+		return ['larablob:store'];
 	}
 
 }

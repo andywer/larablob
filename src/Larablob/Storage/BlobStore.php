@@ -80,7 +80,7 @@ class BlobStore {
     public function allBlobGroupNames()
     {
         $directoryNames = File::directories($this->path);
-        $blobGroupNames = array();
+        $blobGroupNames = [];
         
         foreach ($directoryNames as $dirName) {
             $blobGroupNames[] = $this->unescapeBlobGroupName(basename($dirName));

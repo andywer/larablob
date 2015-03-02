@@ -100,7 +100,7 @@ class BlobGroup {
     public function allBlobIds()
     {
         $blobFiles = File::files($this->path);
-        $blobIds = array();
+        $blobIds = [];
 
         foreach ($blobFiles as $blobFileName) {
             if (substr($blobFileName, -10) === ' meta.json') { continue; }
