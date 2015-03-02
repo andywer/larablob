@@ -1,9 +1,8 @@
 <?php namespace Larablob;
 
-use Illuminate\Support\ServiceProvider;
 use Larablob\Storage\BlobStore;
 
-class LarablobServiceProvider extends ServiceProvider {
+class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 
 	/**
 	 * Indicates if loading of the provider is deferred.
