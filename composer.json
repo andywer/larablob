@@ -14,7 +14,7 @@
         "rhumsaa/uuid": "~2.8"
     },
     "require-dev": {
-        "orchestra/testbench": "2.1.*",
+        "orchestra/testbench": "3.0.*",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~4.5"
     },
