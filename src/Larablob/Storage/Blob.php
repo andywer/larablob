@@ -7,6 +7,7 @@
  */
 
 use File;
+use Larablob\Exceptions\FileSystemException;
 
 class Blob {
     
@@ -40,6 +41,11 @@ class Blob {
      * @return string
      */
     public function getId() { return $this->id; }
+
+    /**
+     * @return string
+     */
+    public function getFilePath() { return $this->path; }
 
     /**
      * @return BlobGroup
@@ -76,6 +82,19 @@ class Blob {
     public function save($data)
     {
         File::put($this->path, $data);
+        clearstatcache();                   // File::size() tends to return obsolete values if clearstatcache() is not called
+    }
+
+    /**
+     * @param string $filePath
+     * @throws FileSystemException
+     */
+    public function importFromFile($filePath)
+    {
+        $result = File::copy($filePath, $this->path);
+
+        if (!$result) { throw new FileSystemException('Cannot import from: '.$filePath); }
+        
         clearstatcache();                   // File::size() tends to return obsolete values if clearstatcache() is not called
     }
 

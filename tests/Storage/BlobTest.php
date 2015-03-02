@@ -43,6 +43,7 @@ class BlobTest extends \TestCase {
         $blob = $this->blob;
         
         $this->assertEquals($this->blobId, $blob->getId());
+        $this->assertEquals($this->blobFilePath, $blob->getFilePath());
         $this->assertEquals($this->blobGroup, $blob->getBlobGroup());
     }
     
@@ -52,17 +53,18 @@ class BlobTest extends \TestCase {
         
         $testData = str_random(1024*1024);        // 1 MB random data
         $blob->save($testData);
-        
-        $this->assertEquals($testData, File::get($this->blobFilePath));
-        $this->assertEquals($testData, $blob->data());
-        $this->assertEquals(strlen($testData), $blob->size());
+        $this->assertBlobStoresData($blob, $testData);
         
         $testData2 = 'Foo bar';
         $blob->save($testData2);
-
-        $this->assertEquals($testData2, File::get($this->blobFilePath));
-        $this->assertEquals($testData2, $blob->data());
-        $this->assertEquals(strlen($testData2), $blob->size());
+        $this->assertBlobStoresData($blob, $testData2);
+        
+        $testData3 = 'Test file content...';
+        $tempFilePath = $this->tempDirectory.'/temp-file';
+        
+        File::put($tempFilePath, $testData3);
+        $blob->importFromFile($tempFilePath);
+        $this->assertBlobStoresData($blob, $testData3);
     }
     
     public function testMetaData()
@@ -88,5 +90,17 @@ class BlobTest extends \TestCase {
         
         $this->assertNotTrue(File::exists($this->blobFilePath));
     }
-    
+
+
+    /**
+     * @param Blob $blob
+     * @param string $data
+     */
+    protected function assertBlobStoresData(Blob $blob, $data)
+    {
+        $this->assertEquals($data, File::get($this->blobFilePath));
+        $this->assertEquals($data, $blob->data());
+        $this->assertEquals(strlen($data), $blob->size());
+    }
+
 }
