@@ -20,7 +20,7 @@ class BlobTest extends \TestCase {
     protected $blobGroup;
     
     /** @var string */
-    protected $blobId = 'this_is the.test-id!';
+    protected $blobId = 'this_is/../the.test-id!';
     
     /** @var string */
     protected $blobFilePath;

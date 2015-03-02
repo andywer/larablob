@@ -20,7 +20,7 @@ class BlobGroupTest extends \TestCase {
     protected $blobStore;
     
     /** @var string */
-    protected $blobGroupName = 'Name of_this.blob%Group';
+    protected $blobGroupName = 'Name/../of_this.blob%Group';
     
     /** @var string */
     protected $blobGroupPath;
@@ -65,23 +65,21 @@ class BlobGroupTest extends \TestCase {
         $blob2 = $this->blobs[1];
         $blob3 = $this->blobs[2];
         
-        $blob1FilePath = $this->blobGroupPath.'/'.urlencode($blob1->getId());
+        $blob1FilePath = $this->getBlobFilePath($blob1);
+        $blob2FilePath = $this->getBlobFilePath($blob2);
+        $blob3FilePath = $this->getBlobFilePath($blob3);
         
         $this->assertEquals('given blob id', $blob1->getId());
-        $this->assertTrue(File::exists($blob1FilePath));
+        $this->assertTrue(File::isFile($blob1FilePath));
         $this->assertEquals(0, File::size($blob1FilePath));
-        
-        $blob2FilePath = $this->blobGroupPath.'/'.urlencode($blob2->getId());
-        
-        $this->assertRegExp('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $blob2->getId());
-        $this->assertTrue(File::exists($blob2FilePath));
-        $this->assertEquals(0, File::size($blob2FilePath));
 
-        $blob3FilePath = $this->blobGroupPath.'/'.urlencode($blob3->getId());
+        $this->assertRegExp('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $blob2->getId());
+        $this->assertTrue(File::isFile($blob2FilePath));
+        $this->assertEquals(0, File::size($blob2FilePath));
 
         $this->assertRegExp('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $blob3->getId());
         $this->assertNotEquals($blob2->getId(), $blob3->getId());
-        $this->assertTrue(File::exists($blob3FilePath));
+        $this->assertTrue(File::isFile($blob3FilePath));
         $this->assertEquals(0, File::size($blob3FilePath));
     }
 
@@ -123,6 +121,25 @@ class BlobGroupTest extends \TestCase {
         $this->assertEquals($blob1->getId(), $blob->getId());
         $this->assertEquals($blobGroup, $blob->getBlobGroup());
     }
+
+    /**
+     * @expectedException \Larablob\Exceptions\NotFoundException
+     */
+    public function testBlobNotFound()
+    {
+        $this->blobGroup->getBlob('does not exist');
+    }
+    
+    public function testGetBlobAutoCreate()
+    {
+        $blob = $this->blobGroup->getBlob('auto-created', true);
+        $blobFilePath = $blob1FilePath = $this->getBlobFilePath($blob);
+
+        $this->assertEquals('auto-created', $blob->getId());
+        $this->assertTrue(File::isFile($blobFilePath));
+        
+        $this->blobs[] = $blob;
+    }
     
     public function testGetAllBlobIds()
     {
@@ -158,6 +175,15 @@ class BlobGroupTest extends \TestCase {
         $this->blobGroup->delete();
 
         $this->assertNotTrue(File::exists($this->blobGroupPath));
+    }
+
+    /**
+     * @param Blob $blob
+     * @return string
+     */
+    protected function getBlobFilePath(Blob $blob)
+    {
+        return $this->blobGroupPath.'/'.urlencode($blob->getId());
     }
 
 }
