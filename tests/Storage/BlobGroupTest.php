@@ -133,7 +133,7 @@ class BlobGroupTest extends \TestCase {
     public function testGetBlobAutoCreate()
     {
         $blob = $this->blobGroup->getBlob('auto-created', true);
-        $blobFilePath = $blob1FilePath = $this->getBlobFilePath($blob);
+        $blobFilePath = $this->getBlobFilePath($blob);
 
         $this->assertEquals('auto-created', $blob->getId());
         $this->assertTrue(File::isFile($blobFilePath));
