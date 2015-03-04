@@ -86,9 +86,12 @@ class BlobTest extends \TestCase {
     
     public function testDelete()
     {
+        $this->blob->setMeta(array( 'foo' => 'bar' ));
+        
         $this->blob->delete();
         
         $this->assertNotTrue(File::exists($this->blobFilePath));
+        $this->assertNotTrue(File::exists($this->blobFilePath.' meta.json'));
     }
 
 

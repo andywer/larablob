@@ -58,6 +58,8 @@ class Blob {
     public function delete()
     {
         File::delete($this->path);
+        
+        if (File::exists($this->metaFilePath)) { File::delete($this->metaFilePath); }
     }
 
     /**
