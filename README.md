@@ -41,6 +41,15 @@ And optionally:
 ```
 
 
+## Laravel 4
+
+If you still use Laravel 4.1 or 4.2, install the package like:
+
+```bash
+composer require andywer/larablob=dev-laravel4
+```
+
+
 ## Usage
 
 Usage is simple and straight forward. The following sample code shows how to easily store random HTTP POST data and
@@ -126,19 +135,89 @@ class PostController extends Controller {
 ```
 
 
+## API
+
+### Larablob\Facades\BlobStore
+
+##### BlobStore::getPath()
+Returns the path to the blob store base directory on the file system.
+
+##### BlobStore::createBlobGroup(string $name)
+Creates a new blob group using the supplied `$name` and returns the `BlobGroup` instance. May throw a `Larablob\Exceptions\NamingException` or a `Larablob\Exceptions\AlreadyPresentException`.
+
+##### BlobStore::getBlobGroup(string $name, bool $autoCreate = false)
+Returns a `BlobGroup` instance which you can use to create, read, update or delete blobs. If the blob group cannot be found a `Larablob\Exceptions\NotFoundException` is thrown, unless `$autoCreate` is set to true (in this case a new blob group with the given name will be created and returned).
+
+##### BlobStore::allBlobGroupNames()
+Returns an array containing all existing blob group's names.
+
+##### BlobStore::blobGroupExists(string $name)
+Returns `true` if a blob group with this name exists, `false` if not.
+
+
+### Larablob\Storage\BlobGroup
+
+##### $blobGroup->getName()
+Returns the name of the blob group.
+
+##### $blobGroup->getStore()
+Returns the `Larablob\Storage\BlobStore` instance of the blob group's store.
+
+##### $blobGroup->createBlob(string $id = null)
+Creates a new blob in the blob group and returns a `Blob` instance. You can optionally pass an `$id` to the method (any non-empty string will do; the filename will be `urlencode($id)`) or otherwise Larablob will create a random `UUID v4` for the blob.
+
+Hint: A blob's ID must only be unique in the context of it's blob group.
+
+##### $blobGroup->getBlob(string $id, bool $autoCreate = false)
+Returns a `Blob` instance. If the blob cannot be found a `Larablob\Exceptions\NotFoundException` is thrown, unless `$autoCreate` is set to true (in this case a new blob with the given id will be created and returned).
+
+##### $blobGroup->allBlobIds()
+Returns an array containing all blob's identifiers (in this blob group).
+
+##### $blobGroup->blobExists(string $id)
+Returns `true` if a blob with the given ID exists, `false` if not.
+
+##### $blobGroup->delete()
+Deletes the blob group and all its blobs. Attention: Trying to access the blob group or it's contents after calling `delete()` may result in an exception being thrown.
+
+
+### Larablob\Storage\Blob
+
+#### $blob->getId()
+Returns the blob's identifier as a `string`.
+
+#### $blob->getFilePath()
+Returns the path to the blob file as a `string`.
+
+#### $blob->getBlobGroup()
+Returns the `BlobGroup` instance of the blob group that contains this blob.
+
+#### $blob->data()
+Returns the blob's data as a `string`.
+
+#### $blob->size()
+Returns an `integer` indicating the blob data's size in bytes.
+
+#### $blob->save(string $data)
+Update the blob's data. Overwrites existing data.
+
+#### $blob->importFromFile(string $filePath)
+A shortcut to saving the contents of the given file to the blob. Throws a `Larablob\Exceptions\FileSystemException` if the file cannot be read.
+
+#### $blob->getMeta()
+Returns the blob's metadata previously set by `setMeta()` as a generic object (`stdClass`).
+
+#### $blob->setMeta(mixed $metadata)
+Saves custom metadata for the blob. The metadata will be encoded to a JSON string and saved to another file.
+
+#### $blob->delete()
+Deletes the blob and it's metadata. Attention: Trying to access the blob or it's content after calling `delete()` may result in an exception being thrown.
+
+
 ## Configuration
 
 Currently the only thing to configure is the store path. It defaults to a directory `larablob` in the application's
 storage directory.
-
-
-## Laravel 4
-
-If you still use Laravel 4.1 or 4.2, install the package like:
-
-```bash
-composer require andywer/larablob=dev-laravel4
-```
 
 
 ## License
