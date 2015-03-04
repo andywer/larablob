@@ -97,6 +97,8 @@ class BlobStoreTest extends \TestCase {
         
         $this->assertInstanceOf('Larablob\Storage\BlobGroup', $group);
         $this->assertEquals('group1', $group->getName());
+
+        $this->assertSame($group, $this->blobStore->getBlobGroup('group1'), 'subsequent calls to getBlobGroup() with the same group name should return the same BlobGroup instance');
     }
 
     /**

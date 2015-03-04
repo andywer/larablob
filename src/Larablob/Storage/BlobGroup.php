@@ -22,6 +22,9 @@ class BlobGroup {
 
     /** @var string */
     protected $path;
+    
+    /** @var Blob[] */
+    protected $instantiatedBlobs = array();
 
 
     /**
@@ -70,7 +73,7 @@ class BlobGroup {
         $blobPath = $this->getBlobPath($id);
         File::put($blobPath, '');
 
-        $blob = new Blob($this, $id, $blobPath);
+        $blob = $this->blobInstance($id, $blobPath);
         $blob->setMeta(new \stdClass());
         
         return $blob;
@@ -91,7 +94,7 @@ class BlobGroup {
             return $this->createBlob($id);
         }
 
-        return new Blob($this, $id, $this->getBlobPath($id));
+        return $this->blobInstance($id, $this->getBlobPath($id));
     }
 
     /**
@@ -118,6 +121,21 @@ class BlobGroup {
     public function blobExists($id)
     {
         return File::exists($this->getBlobPath($id));
+    }
+
+
+    /**
+     * @param string $id
+     * @param string $blobPath
+     * @return Blob
+     */
+    protected function blobInstance($id, $blobPath)
+    {
+        if (!isset($this->instantiatedBlobs[$id])) {
+            $this->instantiatedBlobs[$id] = new Blob($this, $id, $blobPath);
+        }
+        
+        return $this->instantiatedBlobs[$id];
     }
 
 
