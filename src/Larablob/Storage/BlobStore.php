@@ -17,6 +17,9 @@ class BlobStore {
     /** @var string */
     protected $path;
 
+    /** @var BlobGroup[] */
+    protected $instantiatedBlobGroups = array();
+
 
     /**
      * @param string $path
@@ -54,7 +57,7 @@ class BlobStore {
         $blobGroupPath = $this->getBlobGroupPath($name);
         File::makeDirectory($blobGroupPath);
 
-        return new BlobGroup($this, $name, $blobGroupPath);
+        return $this->blobGroupInstance($name, $blobGroupPath);
     }
 
     /**
@@ -71,7 +74,7 @@ class BlobStore {
             return $this->createBlobGroup($name);
         }
         
-        return new BlobGroup($this, $name, $this->getBlobGroupPath($name));
+        return $this->blobGroupInstance($name, $this->getBlobGroupPath($name));
     }
 
     /**
@@ -98,6 +101,20 @@ class BlobStore {
         return File::exists($this->getBlobGroupPath($name));
     }
 
+
+    /**
+     * @param string $name
+     * @param string $groupPath
+     * @return BlobGroup
+     */
+    protected function blobGroupInstance($name, $groupPath)
+    {
+        if (!isset($this->instantiatedBlobGroups[$name])) {
+            $this->instantiatedBlobGroups[$name] = new BlobGroup($this, $name, $groupPath);
+        }
+        
+        return $this->instantiatedBlobGroups[$name];
+    }
 
     /**
      * @param string $name
