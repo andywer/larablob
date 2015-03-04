@@ -140,7 +140,7 @@ class PostController extends Controller {
 ### Larablob\Facades\BlobStore
 
 ##### BlobStore::getPath()
-Returns the path to the blob store base directory on the file system.
+Returns the path to the blob store base directory on the file system. Defaults to `{project-dir}/storage/larablob`
 
 ##### BlobStore::createBlobGroup(string $name)
 Creates a new blob group using the supplied `$name` and returns the `BlobGroup` instance. May throw a `Larablob\Exceptions\NamingException` or a `Larablob\Exceptions\AlreadyPresentException`.
