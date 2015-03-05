@@ -98,6 +98,20 @@ class BlobGroup {
     }
 
     /**
+     * @return Blob[]
+     */
+    public function allBlobs()
+    {
+        $blobs = array();
+
+        foreach ($this->allBlobIds() as $blobId) {
+            $blobs[] = $this->getBlob($blobId);
+        }
+
+        return $blobs;
+    }
+
+    /**
      * @return string[]
      */
     public function allBlobIds()
