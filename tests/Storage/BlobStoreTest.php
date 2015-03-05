@@ -120,6 +120,17 @@ class BlobStoreTest extends \TestCase {
         $this->blobGroups[] = $group;
     }
     
+    public function testAllBlobs()
+    {
+        $actualBlobGroups = $this->blobStore->allBlobGroups();
+        $expectedBlobGroups = $this->blobGroups;
+        
+        sort($actualBlobGroups);
+        sort($expectedBlobGroups);
+        
+        $this->assertEquals($expectedBlobGroups, $actualBlobGroups);
+    }
+    
     public function testAllBlobGroupNames()
     {
         $actualBlobGroupNames = $this->blobStore->allBlobGroupNames();

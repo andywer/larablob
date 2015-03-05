@@ -143,6 +143,17 @@ class BlobGroupTest extends \TestCase {
         $this->blobs[] = $blob;
     }
     
+    public function testGetAllBlobs()
+    {
+        $actualBlobs = $this->blobGroup->allBlobs();
+        $expectedBlobs = $this->blobs;
+        
+        sort($actualBlobs);
+        sort($expectedBlobs);
+        
+        $this->assertEquals($expectedBlobs, $actualBlobs);
+    }
+    
     public function testGetAllBlobIds()
     {
         $actualBlobIds = $this->blobGroup->allBlobIds();

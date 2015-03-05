@@ -78,6 +78,20 @@ class BlobStore {
     }
 
     /**
+     * @return BlobGroup[]
+     */
+    public function allBlobGroups()
+    {
+        $blobGroups = array();
+        
+        foreach ($this->allBlobGroupNames() as $groupName) {
+            $blobGroups[] = $this->getBlobGroup($groupName);
+        }
+        
+        return $blobGroups;
+    }
+
+    /**
      * @return string[]
      */
     public function allBlobGroupNames()
