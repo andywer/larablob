@@ -30,7 +30,7 @@ PHP blob store for the famous [Laravel](http://laravel.com/) web framework.
 Just run the following command in your project directory:
 
 ```bash
-composer require andywer/larablob=dev-master      # dev-laravel4 if you are using Laravel 4.1 or 4.2
+composer require andywer/larablob=dev-master      # dev-laravel4 for Laravel 4.1 or 4.2
 ```
 
 Now add the following line to the `providers` array of your `config/app.php` file:
