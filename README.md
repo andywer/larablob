@@ -3,7 +3,18 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/andywer/larablob/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/andywer/larablob/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/andywer/larablob/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/andywer/larablob/?branch=master)
 
-Laravel local blob storage
+PHP blob store for the famous [Laravel](http://laravel.com/) web framework.
+
+
+## Why use it?
+
+- You will frequently need to store binary large objects (blobs) like user-uploaded images
+- Larablob stores the data separate from your database
+- So your database dumps stay small
+- Backups are dead easy: Just copy the blob store directory
+- Easy to set up and simple to use
+- Frequent security pitfalls have been considered and cared for
+- Clean high-level API and uncomplicated access on filesystem layer
 
 
 ## Features
@@ -148,6 +159,9 @@ Creates a new blob group using the supplied `$name` and returns the `BlobGroup` 
 ##### BlobStore::getBlobGroup(string $name, bool $autoCreate = false)
 Returns a `BlobGroup` instance which you can use to create, read, update or delete blobs. If the blob group cannot be found a `Larablob\Exceptions\NotFoundException` is thrown, unless `$autoCreate` is set to true (in this case a new blob group with the given name will be created and returned).
 
+##### BlobStore::allBlobGroups()
+Returns an array containing all existing `BlobGroup`s.
+
 ##### BlobStore::allBlobGroupNames()
 Returns an array containing all existing blob group's names.
 
@@ -170,6 +184,9 @@ Hint: A blob's ID must only be unique in the context of it's blob group.
 
 ##### $blobGroup->getBlob(string $id, bool $autoCreate = false)
 Returns a `Blob` instance. If the blob cannot be found a `Larablob\Exceptions\NotFoundException` is thrown, unless `$autoCreate` is set to true (in this case a new blob with the given id will be created and returned).
+
+##### $blobGroup->allBlobs()
+Returns an array containing all `Blob`s of this blob group.
 
 ##### $blobGroup->allBlobIds()
 Returns an array containing all blob's identifiers (in this blob group).
