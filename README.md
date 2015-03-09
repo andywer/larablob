@@ -1,4 +1,4 @@
-# Larablob
+# Larablob - Laravel blob store
 [![Build Status](https://travis-ci.org/andywer/larablob.svg?branch=master)](https://travis-ci.org/andywer/larablob)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/andywer/larablob/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/andywer/larablob/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/andywer/larablob/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/andywer/larablob/?branch=master)
