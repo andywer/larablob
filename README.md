@@ -3,7 +3,7 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/andywer/larablob/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/andywer/larablob/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/andywer/larablob/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/andywer/larablob/?branch=master)
 
-File uploads made easy. PHP blob store for the famous [Laravel](http://laravel.com/) web framework.
+File uploads made easy! PHP blob store for the famous [Laravel](http://laravel.com/) web framework.
 
 
 ## Why use it?
