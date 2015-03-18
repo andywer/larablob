@@ -1,7 +1,7 @@
 {
     "name": "andywer/larablob",
-    "description": "Laravel local blob storage",
-    "keywords": ["laravel", "blob", "store"],
+    "description": "Local blob store for the famous Laravel PHP web framework",
+    "keywords": ["laravel", "blob", "store", "file", "upload"],
     "authors": [
         {
             "name": "Andy Wermke",
