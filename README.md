@@ -36,7 +36,8 @@ $blobGroup = BlobStore::getBlobGroup('profile-pics', true);     // true indicate
 $blob = $blobGroup->createBlob();
 $blob->importFromFile('php://input');
 
-echo "Saved request body to profile-pic blob ".$blob->getId()." without worrying about malicious user-given file names!\n";
+echo "Saved request body to filesystem without worrying about malicious user-given file names!\n";
+echo "And we now have a high-level API for using it, too.";
 
 $blob->save("Hello world!");
 echo "Stored new data in blob: ".$blob->data()."\n";
