@@ -6,6 +6,14 @@
 File uploads made easy! PHP blob store for the famous [Laravel](http://laravel.com/) web framework.
 
 
+## Features
+
+- File system based blob storage
+- Blobs grouped by named blob groups
+- Supports storing blob metadata (stored as JSON files)
+- Compatible with Laravel 4.1, 4.2 & 5.0
+
+
 ## Why use it?
 
 - You will frequently need to store binary large objects (blobs) like user-uploaded images
@@ -17,12 +25,30 @@ File uploads made easy! PHP blob store for the famous [Laravel](http://laravel.c
 - Clean high-level API and uncomplicated access on filesystem layer
 
 
-## Features
+## How To
 
-- File system based blob storage
-- Blobs grouped by named blob groups
-- Supports storing blob metadata (stored as JSON files)
-- Compatible with Laravel 4.1, 4.2 & 5.0
+```php
+<?php
+use Larablob\Facades\BlobStore;
+
+$blobGroup = BlobStore::getBlobGroup('profile-pics', true);     // true indicates to create the group if it's not yet present
+
+$blob = $blobGroup->createBlob();
+$blob->importFromFile('php://input');
+
+echo "Saved request body to profile-pic blob ".$blob->getId()." without worrying about malicious user-given file names!\n";
+
+$blob->save("Hello world!");
+echo "Stored new data in blob: ".$blob->data()."\n";
+
+echo "All profile-pic blobs:\n";
+foreach ($blobGroup->allBlobs() as $blob) {
+    echo "-> ".$blob->getId()." (size: ".$blob->size().")\n";
+}
+
+echo "Cleaning up...\n";
+$blobGroup->delete();
+```
 
 
 ## Installation
@@ -61,7 +87,7 @@ composer require andywer/larablob=dev-laravel4
 ```
 
 
-## Usage
+## Example
 
 Usage is simple and straight forward. The following sample code shows how to easily store random HTTP POST data and
 related metadata into a blob store.
